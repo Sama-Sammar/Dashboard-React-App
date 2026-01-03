@@ -1,0 +1,13 @@
+.form {
+  display: flex;
+  gap: 10px;
+}
+
+.form input {
+  padding: 8px;
+}
+
+.form button {
+  padding: 8px 14px;
+  cursor: pointer;
+}
