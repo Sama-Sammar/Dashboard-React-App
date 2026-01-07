@@ -1,6 +1,6 @@
 # React Dashboard App
 
-A simple React dashboard application built to practice React Hooks, React Router, protected routes, and component-based structure.
+A simple React dashboard application built to practice React Hooks, React Router (v6+), route guards, and clean project structure.
 
 ---
 
@@ -9,40 +9,55 @@ A simple React dashboard application built to practice React Hooks, React Router
 - Login page with username input
 - Auto focus on input using `useRef`
 - Login state stored in `localStorage`
-- Protected routes (Dashboard & Profile)
+- **Route Guards**:
+  - Prevent access to Dashboard/Profile if not logged in
+  - Prevent access to Login page if already logged in
 - Fetch users from external API using `axios`
-- Navigation between pages using React Router v6 (`createBrowserRouter`)
-- Logout functionality
-- Clean folder structure (Pages & Components)
+- Navigation using React Router v6 (`createBrowserRouter`)
+- Clean folder structure (configs / guards / pages / components)
 - Scoped styling using CSS Modules only (no global/body styling)
 
 ---
 
-## 📄 Pages
+## 📄 Pages & Routes
 
-### 🔐 Login Page (`/login`)
-- Username input
-- Input auto-focused on load
-- Saves login state and username in `localStorage`
-- Redirects to Dashboard after login
+### `/login`
+- Username input (focused automatically)
+- Saves:
+  - `isLoggedIn`
+  - `username`
+  in `localStorage`
+- Redirects to `/dashboard` after login
+- **If user is already logged in → redirected to `/dashboard`**
 
-### 📊 Dashboard Page (`/dashboard`)
-- Protected route
+### `/dashboard` (Protected)
+- Accessible only if logged in
 - Fetches users from: https://jsonplaceholder.typicode.com/users
 - Displays users list
-- Button to navigate to Profile page
+- Button to navigate to `/profile`
 
-### 👤 Profile Page (`/profile`)
-- Protected route
-- Displays logged-in username
-- Logout button clears `localStorage` and redirects to Login
+### `/profile` (Protected)
+- Accessible only if logged in
+- Displays logged-in username from `localStorage`
+- Logout button clears `localStorage` and redirects to `/login`
 
 ---
 
-## 🧠 Technical Stack
+## 🛡️ Guards Behavior
 
-- React
-- Vite
+- **DashboardGuard**:
+- If not logged in → redirect to `/login`
+- **LoginGuard**:
+- If logged in → redirect to `/dashboard`
+
+This ensures users cannot access protected pages via URL without logging in,
+and cannot go back to the login page after logging in.
+
+---
+
+## 🧠 Tech Stack
+
+- React + Vite
 - React Router DOM (v6+)
 - Axios
 - CSS Modules
@@ -52,54 +67,42 @@ A simple React dashboard application built to practice React Hooks, React Router
 ## 📁 Project Structure
 
 src/
+├── configs/
+│ └── router-config.js
+├── guards/
+│ ├── dashboard-guard.jsx
+│ └── login-guard.jsx
+├── pages/
+│ ├── Login/
+│ ├── Dashboard/
+│ └── Profile/
 ├── components/
 │ ├── Login/
 │ │ └── LoginForm/
 │ ├── Dashboard/
 │ │ └── UsersList/
-│ ├── Profile/
-│ │ └── LogoutButton/
-│ └── ProtectedRoute/
-│
-├── pages/
-│ ├── Login/
-│ ├── Dashboard/
 │ └── Profile/
-│
-├── main.jsx
+│ └── LogoutButton/
+├── routes.jsx
 ├── App.jsx
-├── global.css
+├── main.jsx
+└── global.css
 
 ---
 
-## 🛡️ Routing & Protection
+## 🔁 Routing Setup
 
-- Routing is handled using `createBrowserRouter` and `RouterProvider`
-- Protected routes are wrapped with a custom `ProtectedRoute` component
-- Unauthorized users are redirected to `/login`
-
----
-
-## 🎨 Styling
-
-- Styling is done using **CSS Modules only**
-- No global or `body` styling (as per instructions)
-- Each page and component has its own scoped styles
+- `routes.jsx`: contains the route definitions array
+- `configs/router-config.js`: creates the router using `createBrowserRouter`
+- `App.jsx`: renders `<RouterProvider />`
+- `main.jsx`: renders `<App />` into the DOM
 
 ---
 
 ## ▶️ How to Run the Project
 
-Install dependencies:
-   npm install
-Start the development server:
-   npm run dev
-Open the app in your browser:
-   http://localhost:5173
+1. Install dependencies: npm install
+2. Start the development server: npm run dev
+3. Open the app: http://localhost:5173
 
-✅ Notes
-The App.jsx file is not used because routing is handled directly in main.jsx
-
-The project focuses on React logic rather than heavy UI design
-
-Layout component was not required since there are no shared UI elements
+---
