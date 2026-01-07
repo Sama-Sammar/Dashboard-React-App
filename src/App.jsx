@@ -1,5 +1,8 @@
-// App.jsx is not used because routing is handled in main.jsx using RouterProvider
+import { RouterProvider } from "react-router-dom";
+import router from "./configs/router-config";
 
-const App = () => null;
+const App = () => {
+    return <RouterProvider router={router} />;
+};
 
 export default App;
