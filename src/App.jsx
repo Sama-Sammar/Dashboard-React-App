@@ -1,4 +1,4 @@
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";// v6.4
 import router from "./configs/router-config";
 
 const App = () => {

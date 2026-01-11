@@ -22,11 +22,9 @@ const Dashboard = () => {
   return (
     <div className={styles.wrapper}>
       <h1>Dashboard</h1>
-
       <button onClick={() => navigate("/profile")}>
         Go to Profile
       </button>
-      
       {loading ? (// Conditional Rendering
         <p>Loading users...</p>
       ) : (

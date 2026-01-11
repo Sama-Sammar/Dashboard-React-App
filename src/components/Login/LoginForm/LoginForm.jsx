@@ -3,7 +3,7 @@ import styles from "./LoginForm.module.css";
 
 const LoginForm = ({ onLogin }) => {
   const [username, setUsername] = useState("");
-  const inputRef = useRef(null);// to hold html element 
+  const inputRef = useRef(null);// to hold html element in DOM
 
   useEffect(() => {
     inputRef.current?.focus(); // focus on load
